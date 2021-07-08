@@ -10,6 +10,6 @@ blank = "\033[0;37;12m"
 def clear():
   os.system('clear')
 
-  print(f"{blank}Starscape Companion {orange}[BETA]{blank}")
+  print(f"{blank}Starscape Companion {orange}[ALPHA]{blank}")
   print()
   print()
