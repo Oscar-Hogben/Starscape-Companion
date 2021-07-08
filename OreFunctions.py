@@ -1,10 +1,13 @@
 from Clear import clear
+import time
 
 green = "\033[1;32;40m"
 red = "\033[0;31;40m"
 orange = "\033[0;33;40m"
 white = "\033[0;37;40m"
 blank = "\033[0;37;12m"
+
+ores = ["korrelite", "reknite", "gellium", "axnit", "narcor", "red narcor", "vexnium", "water"]
 
 class OreManager:
   def AddOre(ore, amount):
@@ -45,8 +48,6 @@ class OreManager:
 
     totalCredits = 0
 
-    ores = ["korrelite", "reknite", "gellium", "axnit", "narcor", "red narcor", "vexnium", "water"]
-
     for ore in ores:
       CurrentOres = open("CurrentOreAmounts/{}".format(ore), "r")
       oreAmount = str(CurrentOres.read())
@@ -77,16 +78,37 @@ class OreManager:
     print(blank)
 
   def SetTargets():
+    failed = False
     ores = ["korrelite", "reknite", "gellium", "axnit", "narcor", "red narcor", "vexnium", "water"]
 
     for ore in ores:
-      print(f"How much {ore} do you need?")
-      oreAmount = input("[enter the number here]: ")
+      try:
+        if failed == True:
+          return False
+          break
+        print(f"How much {ore} do you need?")
+        oreAmount = str(int(input("[enter the number here]: ")))
 
-      file = open(f"TargetOreAmounts/{ore}", "w")
+        file = open(f"TargetOreAmounts/{ore}", "w")
 
-      file.write(oreAmount)
+        file.write(oreAmount)
 
-      file.close()
+        file.close()
 
-      clear()
+        clear()
+      except:
+        for ore in ores:
+          file = open(f"TargetOreAmounts/{ore}", "w")
+          file.write("0")
+          file.close()
+
+        clear()
+
+        print(f"{red}Please enter a number!{blank}")
+        time.sleep(2)
+        clear()
+        failed = True
+      
+    if failed == False:
+      return True
+        
